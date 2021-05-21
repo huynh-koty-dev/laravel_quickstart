@@ -14,7 +14,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($todos as $item)
+              @foreach ($data as $item)
               <tr  style="text-align: center">        
                     <th scope="row">+</th>                   
                     <td>

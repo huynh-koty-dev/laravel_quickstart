@@ -23,4 +23,7 @@ Route::post('login',[UserController::class,'login']);
 Route::view('/register','register')->middleware('checkLogin');
 Route::post('register',[UserController::class,'register']);
 Route::get('/logout',[UserController::class,'logout']);
-Route::get('delete/{id}',[TodosController::class,'delete']);
+Route::get('delete/{id}',[TodosController::class,'delete'])->name('delete')->middleware('checkLogout');
+Route::get('edit/{id}', [TodosController::class,'showData'])->name('edit')->middleware('checkLogout');
+Route::post('edit', [TodosController::class,'edit'])->name('edittodos')->middleware('checkLogout');
+Route::get('search',[TodosController::class,'search'])->name('search');

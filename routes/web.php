@@ -21,4 +21,6 @@ Route::get('/', function () {
 Route::get('/home',[TodosController::class,'index'])->middleware('checkLogout');
 Route::get('/login',[UserController::class,'index'])->middleware('checkLogin');
 Route::post('login',[UserController::class,'login']);
+Route::view('/register','register')->middleware('checkLogin');
+Route::post('register',[UserController::class,'register']);
 Route::get('/logout',[UserController::class,'logout']);

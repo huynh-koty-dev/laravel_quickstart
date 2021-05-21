@@ -31,4 +31,22 @@ class UserController extends Controller
         $req->session()->pull('id');
         return redirect('login');
     }
+    public function register(Request $req){
+        $req->validate([
+            '_name'=>'required',
+            '_email'=>'required|email',
+            '_password'=>'required|max:30'
+        ]);
+        $user = User::where('email','=',$req->_email)->first();
+        if($user){
+            return view('register',['error'=>'Email already exist!']);
+        }else{
+            $data = new User;
+            $data->name=$req->_name;
+            $data->email=$req->_email;
+            $data->password=$req->_password;
+            $data->save();
+            return redirect('login');
+        }
+    }
 }

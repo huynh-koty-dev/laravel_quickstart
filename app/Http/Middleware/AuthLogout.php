@@ -16,7 +16,7 @@ class AuthLogout
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->path()!=='login' && !$request->session()->has('user')){
+        if($request->path()!=='login' && !$request->session()->has('user') && $request->path()!=='register'){
             return redirect('login');
         }
         

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Session;
 class UserController extends Controller
 {
     //
@@ -44,9 +45,21 @@ class UserController extends Controller
             $data = new User;
             $data->name=$req->_name;
             $data->email=$req->_email;
-            $data->password=$req->_password;
+            $data->password=Hash::make($req->_password);
             $data->save();
             return redirect('login');
         }
+    }
+    public function getProfile(){
+        $id = Session::get('id');
+        $user = User::find($id);
+        return view('profile',['users'=>$user]);
+    }
+    public function editProfile(Request $req){
+        $user = User::findOrFail($req->id);
+        $user->name = $req->name;
+        $user->save();
+        $req->session()->put('user',$user->name);
+        return redirect('profile');
     }
 }

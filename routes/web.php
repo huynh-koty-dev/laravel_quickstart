@@ -27,3 +27,6 @@ Route::get('delete/{id}',[TodosController::class,'delete'])->name('delete')->mid
 Route::get('edit/{id}', [TodosController::class,'showData'])->name('edit')->middleware('checkLogout');
 Route::post('edit', [TodosController::class,'edit'])->name('edittodos')->middleware('checkLogout');
 Route::get('search',[TodosController::class,'search'])->name('search');
+Route::get('profile',[UserController::class,'getProfile']);
+Route::post('editProfile',[UserController::class,'editProfile'])->name('editProfile');
+Route::view('profileform', 'profileform');

@@ -17,6 +17,7 @@ class TodosController extends Controller
     }
     public function addtodos(Request $req)
     {
+        dd('sadfsadf');
         $req->validate([
             'title'=>'required',
             'content'=>'required',

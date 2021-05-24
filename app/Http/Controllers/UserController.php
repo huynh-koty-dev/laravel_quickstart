@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Session;
+use Auth;
 class UserController extends Controller
 {
     //
@@ -18,7 +20,7 @@ class UserController extends Controller
             'password'=>'required|max:30'
         ]);
         $user = User::where('email','=',$req->email)->first();
-        if(!$user || Hash::check($user->password, $req->password)){
+        if(!Auth::attempt(['email' => $req->email, 'password' => $req->password])){
             return view('login',['error'=>'Email or Password not matches!']);
         }
         else{
@@ -38,7 +40,13 @@ class UserController extends Controller
             '_email'=>'required|email',
             '_password'=>'required|max:30'
         ]);
-        $user = User::where('email','=',$req->_email)->first();
+        if(strpos($req->_name,'<')!==false){
+            return view('register',['error'=>'Name not match!']);
+        }
+        $user = DB::select( DB::raw("SELECT * FROM users WHERE email = :email"),array(
+            'email'=>$req->_email
+        ));
+        //$user = User::where('email','=',$req->_email)->first();
         if($user){
             return view('register',['error'=>'Email already exist!']);
         }else{

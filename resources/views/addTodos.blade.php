@@ -29,6 +29,9 @@
               </div>
             <button type="submit" class="btn btn-primary">Add</button>
           </form>
+          @if ($error ?? null)
+            <div class="alert alert-danger " role="alert">{{$error}}</div>
+          @endif
     </div>
     <style>
         .custom-form{

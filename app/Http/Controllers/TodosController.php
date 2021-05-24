@@ -21,6 +21,9 @@ class TodosController extends Controller
             'title'=>'required',
             'content'=>'required',
         ]);
+        if(strpos($req->title,'<')!==false){
+            return view('addTodos',['error'=>'Title not match!']);
+        }
         $data = new Todo;
         $data->title = $req->title;
         $data->content = $req->content;
